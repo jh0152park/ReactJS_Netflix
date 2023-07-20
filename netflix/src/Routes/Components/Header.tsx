@@ -73,7 +73,7 @@ const Item = styled.li`
     }
 `;
 
-const Circle = styled.span`
+const Circle = styled(motion.span)`
     position: absolute;
     width: 7px;
     height: 7px;
@@ -118,63 +118,48 @@ function Header() {
                 </Link>
                 <Items>
                     <Link to="/">
-                        <Item
-                            style={{
-                                fontWeight: homeMatch?.isExact ? "bold" : "400",
-                            }}
-                        >
-                            Home {homeMatch?.isExact && <Circle />}
+                        <Item>
+                            Home
+                            {homeMatch?.isExact && (
+                                <Circle layoutId="statusDot" />
+                            )}
                         </Item>
                     </Link>
 
                     <Link to="/tv">
-                        <Item
-                            style={{
-                                fontWeight: tvMatch ? "bold" : "400",
-                            }}
-                        >
-                            TV Shows {tvMatch && <Circle />}
+                        <Item>
+                            TV Shows
+                            {tvMatch && <Circle layoutId="statusDot" />}
                         </Item>
                     </Link>
 
                     <Link to="/movie">
-                        <Item
-                            style={{
-                                fontWeight: movieMatch ? "bold" : "400",
-                            }}
-                        >
-                            Movies {movieMatch && <Circle />}
+                        <Item>
+                            Movies
+                            {movieMatch && <Circle layoutId="statusDot" />}
                         </Item>
                     </Link>
 
                     <Link to="/latest">
-                        <Item
-                            style={{
-                                fontWeight: latestMatch ? "bold" : "400",
-                            }}
-                        >
-                            New & Popular {latestMatch && <Circle />}
+                        <Item>
+                            New & Popular
+                            {latestMatch && <Circle layoutId="statusDot" />}
                         </Item>
                     </Link>
 
                     <Link to="/my-list">
-                        <Item
-                            style={{
-                                fontWeight: myListMatch ? "bold" : "400",
-                            }}
-                        >
-                            My List {myListMatch && <Circle />}
+                        <Item>
+                            My List
+                            {myListMatch && <Circle layoutId="statusDot" />}
                         </Item>
                     </Link>
 
                     <Link to="/original-audio">
-                        <Item
-                            style={{
-                                fontWeight: originalAudioMatch ? "bold" : "400",
-                            }}
-                        >
-                            Browse by Languages{" "}
-                            {originalAudioMatch && <Circle />}
+                        <Item>
+                            Browse by Languages
+                            {originalAudioMatch && (
+                                <Circle layoutId="statusDot" />
+                            )}
                         </Item>
                     </Link>
                 </Items>
