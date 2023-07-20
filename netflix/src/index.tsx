@@ -33,6 +33,8 @@ const GlobalStyle = createGlobalStyle`
     body {
       line-height: 1;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      text-decoration-line: none;
+      text-decoration: none;
     }
     ol, ul {
       list-style: none;
@@ -48,6 +50,10 @@ const GlobalStyle = createGlobalStyle`
     table {
       border-collapse: collapse;
       border-spacing: 0;
+    }
+    a {
+      text-decoration:none;
+      color:inherit;
     }
 `;
 
