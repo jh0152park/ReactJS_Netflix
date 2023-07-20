@@ -11,7 +11,7 @@ const Navigation = styled.nav`
     position: fixed;
     width: 100%;
     top: 0;
-    background-color: #0a0a0a;
+    background-color: ${(props) => props.theme.black.deepDark};
     font-size: 14px;
 
     padding: 30px 60px;
@@ -100,7 +100,17 @@ const Search = styled.span`
 const SearchBox = styled(motion.input)`
     transform-origin: right center;
     position: absolute;
-    left: -130px;
+    left: -250px;
+    padding: 8px 0px;
+    padding-left: 50px;
+    width: 230px;
+    background-color: ${(props) => props.theme.black.deepDark};
+    opacity: 0.7;
+    border: 1px solid ${(props) => props.theme.white.darker};
+    color: ${(props) => props.theme.white.darker};
+    &::placeholder {
+        font-size: 14px;
+    }
 `;
 
 function Header() {
@@ -191,7 +201,7 @@ function Header() {
                     <motion.svg
                         onClick={openSearch}
                         whileHover={{ cursor: "pointer" }}
-                        animate={{ x: search ? -160 : 0 }}
+                        animate={{ x: search ? -245 : 0 }}
                         transition={{ type: "linear" }}
                         fill="currentColor"
                         viewBox="0 0 20 20"
