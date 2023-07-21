@@ -105,6 +105,7 @@ const Info = styled(motion.div)`
     position: absolute;
     width: 100%;
     bottom: 0;
+    box-sizing: border-box;
     h4 {
         text-align: center;
         font-size: 18px;
