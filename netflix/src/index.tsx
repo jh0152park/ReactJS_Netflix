@@ -36,6 +36,10 @@ const GlobalStyle = createGlobalStyle`
       font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
       text-decoration-line: none;
       text-decoration: none;
+      color: ${(props) => props.theme.white.darker};
+      font-weight: 300;
+      line-height: 1.2;
+      background-color: ${(props) => props.theme.black.deepDark};
     }
     ol, ul {
       list-style: none;
