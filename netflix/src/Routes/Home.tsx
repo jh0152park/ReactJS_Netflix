@@ -166,6 +166,18 @@ function Home() {
                     </Banner>
 
                     <Slider>
+                        <div
+                            style={{
+                                color: "white",
+                                width: "150px",
+                                height: "30px",
+
+                                position: "absolute",
+                                top: -50,
+                            }}
+                        >
+                            Popular on Netflix
+                        </div>
                         <AnimatePresence
                             initial={false}
                             onExitComplete={toggleLeaving}
