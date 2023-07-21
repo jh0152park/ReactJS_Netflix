@@ -139,15 +139,15 @@ function Header() {
     const navAnimation = useAnimation();
 
     function toggleSearch() {
-        if (searchOpen) {
-            inputAnimation.start({
-                scaleX: 0,
-            });
-        } else {
-            inputAnimation.start({
-                scaleX: 1,
-            });
-        }
+        // if (searchOpen) {
+        //     inputAnimation.start({
+        //         scaleX: 0,
+        //     });
+        // } else {
+        //     inputAnimation.start({
+        //         scaleX: 1,
+        //     });
+        // }
         setSearchOpen((prev) => !prev);
     }
 
@@ -163,6 +163,12 @@ function Header() {
 
     return (
         <Navigation
+            onClick={(e) => {
+                const input = document.getElementById("searchBox");
+                if (e.target !== input && searchOpen) {
+                    setSearchOpen(false);
+                }
+            }}
             variants={navigationVariants}
             animate={navAnimation}
             initial="top"
@@ -249,6 +255,7 @@ function Header() {
                     <SearchBox
                         //animate={inputAnimation}
                         //initial={{ scaleX: 0 }}
+                        id="searchBox"
                         animate={{ scaleX: searchOpen ? 1 : 0 }}
                         transition={{ type: "linear" }}
                         placeholder="Titles, people, genres"
