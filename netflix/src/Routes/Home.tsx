@@ -46,14 +46,16 @@ const Slider = styled.div`
 
 const Row = styled(motion.div)`
     display: grid;
-    gap: 10px;
+    gap: 5px;
     grid-template-columns: repeat(6, 1fr);
     position: absolute;
     width: 100%;
 `;
 
-const Box = styled(motion.div)`
-    background-color: yellow;
+const Box = styled(motion.div)<{ bgPhoto: string }>`
+    background-image: url(${(props) => props.bgPhoto});
+    background-size: "cover";
+    background-position: "center" "center";
     height: 200px;
     font-size: 30px;
     color: black;
@@ -61,26 +63,39 @@ const Box = styled(motion.div)`
 
 const rowVariants = {
     hidden: {
-        x: window.outerWidth + 10,
+        x: window.outerWidth + 5,
     },
     visible: {
         x: 0,
     },
     exit: {
-        x: -window.outerWidth - 10,
+        x: -window.outerWidth - 5,
     },
 };
 
 function Home() {
+    const offset = 6;
     const { data, isLoading } = useQuery<IGetMoviesResult>(
         ["movies", "nowPlaying"],
         getMovies
     );
 
     const [index, setIndex] = useState(0);
+    const [leaving, setLeaving] = useState(false);
 
     function increaseIndex() {
-        setIndex((prev) => prev + 1);
+        if (data) {
+            if (leaving) return;
+
+            const totalMoviesLength = data.results.length - 1;
+            const maxIndex = Math.floor(totalMoviesLength / offset) - 1;
+            setIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
+            setLeaving(true);
+        }
+    }
+
+    function toggleLeaving() {
+        setLeaving((prev) => !prev);
     }
 
     return (
@@ -100,7 +115,10 @@ function Home() {
                     </Banner>
 
                     <Slider>
-                        <AnimatePresence>
+                        <AnimatePresence
+                            initial={false}
+                            onExitComplete={toggleLeaving}
+                        >
                             <Row
                                 variants={rowVariants}
                                 initial="hidden"
@@ -109,9 +127,21 @@ function Home() {
                                 transition={{ type: "tween", duration: 0.7 }}
                                 key={index}
                             >
-                                {[1, 2, 3, 4, 5, 6].map((i) => (
-                                    <Box key={i}>{i}</Box>
-                                ))}
+                                {data?.results
+                                    .slice(1)
+                                    .slice(
+                                        offset * index,
+                                        offset * index + offset
+                                    )
+                                    .map((movie) => (
+                                        <Box
+                                            key={movie.id}
+                                            bgPhoto={makeImagePath(
+                                                movie.backdrop_path,
+                                                "w400"
+                                            )}
+                                        ></Box>
+                                    ))}
                             </Row>
                         </AnimatePresence>
                     </Slider>
