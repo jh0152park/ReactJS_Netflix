@@ -59,6 +59,7 @@ const Box = styled(motion.div)<{ bgPhoto: string }>`
     height: 200px;
     font-size: 60px;
     color: black;
+    border-radius: 3px;
 
     &:first-child {
         transform-origin: center left;
