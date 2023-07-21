@@ -59,7 +59,6 @@ const Box = styled(motion.div)<{ bgPhoto: string }>`
     height: 200px;
     font-size: 60px;
     color: black;
-    position: relative;
 
     &:first-child {
         transform-origin: center left;
@@ -86,8 +85,9 @@ const boxVariants = {
         scale: 1,
     },
     hover: {
+        cursor: "pointer",
         zIndex: 99,
-        y: -20,
+        y: -60,
         scale: 1.3,
         transition: {
             delay: 0.5,
@@ -101,7 +101,7 @@ const Info = styled(motion.div)`
     padding: 10px;
     color: ${(props) => props.theme.white.darker};
     background-color: ${(props) => props.theme.black.lighter};
-    opacity: 1;
+    opacity: 0;
     position: absolute;
     width: 100%;
     bottom: 0;
@@ -115,6 +115,11 @@ const Info = styled(motion.div)`
 const infoVariants = {
     hover: {
         opacity: 1,
+        transition: {
+            delay: 0.5,
+            duration: 0.2,
+            type: "tween",
+        },
     },
 };
 
