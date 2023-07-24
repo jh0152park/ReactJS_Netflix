@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { motion, useAnimation, useScroll } from "framer-motion";
-import { Link, useRouteMatch } from "react-router-dom";
+import { Link, useHistory, useRouteMatch } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 
 const Navigation = styled(motion.nav)`
     display: flex;
@@ -87,7 +88,7 @@ const Circle = styled(motion.span)`
     margin: 0 auto;
 `;
 
-const Search = styled.span`
+const Search = styled.form`
     color: ${(props) => props.theme.white.darker};
     display: flex;
     align-items: center;
@@ -124,6 +125,10 @@ const navigationVariants = {
     },
 };
 
+interface IForm {
+    keyword: string;
+}
+
 function Header() {
     const homeMatch = useRouteMatch("/");
     const tvMatch = useRouteMatch("/tv");
@@ -138,6 +143,9 @@ function Header() {
     const inputAnimation = useAnimation();
     const navAnimation = useAnimation();
 
+    const history = useHistory();
+    const { register, handleSubmit } = useForm<IForm>();
+
     function toggleSearch() {
         // if (searchOpen) {
         //     inputAnimation.start({
@@ -149,6 +157,11 @@ function Header() {
         //     });
         // }
         setSearchOpen((prev) => !prev);
+    }
+
+    function onValid(data: IForm) {
+        console.log(data);
+        history.push(`/search?keyword=${data.keyword}`);
     }
 
     useEffect(() => {
@@ -236,7 +249,7 @@ function Header() {
                 </Items>
             </Column>
             <Column>
-                <Search>
+                <Search onSubmit={handleSubmit(onValid)}>
                     <motion.svg
                         onClick={toggleSearch}
                         whileHover={{ cursor: "pointer" }}
@@ -255,6 +268,10 @@ function Header() {
                     <SearchBox
                         //animate={inputAnimation}
                         //initial={{ scaleX: 0 }}
+                        {...register("keyword", {
+                            required: true,
+                            minLength: 2,
+                        })}
                         id="searchBox"
                         animate={{ scaleX: searchOpen ? 1 : 0 }}
                         transition={{ type: "linear" }}
