@@ -4,6 +4,7 @@ import { styled } from "styled-components";
 import { makeImagePath } from "../utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
+import { useHistory, useRouteMatch } from "react-router-dom";
 
 const Wrapper = styled.div`
     background-color: ${(props) => props.theme.black.deepDark};
@@ -125,6 +126,10 @@ const infoVariants = {
 };
 
 function Home() {
+    const history = useHistory();
+    const bigMovieMatch = useRouteMatch<{ movieId: string }>(
+        "/movies/:movieId"
+    );
     const offset = 6;
     const { data, isLoading } = useQuery<IGetMoviesResult>(
         ["movies", "nowPlaying"],
@@ -147,6 +152,10 @@ function Home() {
 
     function toggleLeaving() {
         setLeaving((prev) => !prev);
+    }
+
+    function onBoxClicked(movieId: number) {
+        history.push(`/movies/${movieId}`);
     }
 
     return (
@@ -203,6 +212,10 @@ function Home() {
                                             initial="normal"
                                             transition={{ type: "tween" }}
                                             key={movie.id}
+                                            layoutId={movie.id + ""}
+                                            onClick={() =>
+                                                onBoxClicked(movie.id)
+                                            }
                                             bgPhoto={makeImagePath(
                                                 movie.backdrop_path,
                                                 "w500"
@@ -216,6 +229,24 @@ function Home() {
                             </Row>
                         </AnimatePresence>
                     </Slider>
+
+                    <AnimatePresence>
+                        {bigMovieMatch ? (
+                            <motion.div
+                                layoutId={bigMovieMatch.params.movieId}
+                                style={{
+                                    position: "absolute",
+                                    width: "40vw",
+                                    height: "50vh",
+                                    backgroundColor: "whitesmoke",
+                                    left: 0,
+                                    right: 0,
+                                    top: 100,
+                                    margin: "0 auto",
+                                }}
+                            ></motion.div>
+                        ) : null}
+                    </AnimatePresence>
                 </>
             )}
         </Wrapper>
