@@ -135,14 +135,37 @@ const Overlay = styled(motion.div)`
 `;
 
 const BigMovie = styled(motion.div)`
-    position: "absolute";
-    width: "40vw";
-    height: "50vh";
-    background-color: "whitesmoke";
+    position: absolute;
+    width: 40vw;
+    height: 80vh;
+    background-color: ${(props) => props.theme.black.lighter};
     left: 0;
     right: 0;
-    /* top: scrollY.get() + 200; */
-    margin: "0 auto";
+    margin: 0 auto;
+    border-radius: 15px;
+    overflow: hidden;
+`;
+
+const BigCover = styled.div`
+    width: 100%;
+    height: 400px;
+    background-size: cover;
+    background-position: center center;
+`;
+
+const BigTitle = styled.h3`
+    color: ${(props) => props.theme.white.lighter};
+    font-size: 28px;
+    padding: 20px;
+    position: relative;
+    top: -60px;
+`;
+
+const BigOverview = styled.p`
+    color: ${(props) => props.theme.white.lighter};
+    padding: 20px;
+    position: relative;
+    top: -60px;
 `;
 
 function Home() {
@@ -160,6 +183,12 @@ function Home() {
     const [leaving, setLeaving] = useState(false);
 
     const { scrollY } = useScroll();
+
+    const clickedMovie =
+        bigMovieMatch?.params.movieId &&
+        data?.results.find(
+            (movie) => movie.id + "" === bigMovieMatch.params.movieId
+        );
 
     function increaseIndex() {
         if (data) {
@@ -266,8 +295,27 @@ function Home() {
                                 />
                                 <BigMovie
                                     layoutId={bigMovieMatch.params.movieId}
-                                    style={{ top: scrollY.get() + 200 }}
-                                ></BigMovie>
+                                    style={{ top: scrollY.get() + 100 }}
+                                >
+                                    {clickedMovie && (
+                                        <>
+                                            <BigCover
+                                                style={{
+                                                    backgroundImage: `url(${makeImagePath(
+                                                        clickedMovie.backdrop_path,
+                                                        "w500"
+                                                    )})`,
+                                                }}
+                                            ></BigCover>
+                                            <BigTitle>
+                                                {clickedMovie.title}
+                                            </BigTitle>
+                                            <BigOverview>
+                                                {clickedMovie.overview}
+                                            </BigOverview>
+                                        </>
+                                    )}
+                                </BigMovie>
                             </>
                         ) : null}
                     </AnimatePresence>
