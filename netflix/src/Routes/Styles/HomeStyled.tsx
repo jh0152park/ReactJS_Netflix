@@ -56,3 +56,8 @@ export const BigOverview = styled.p`
     position: relative;
     top: -60px;
 `;
+
+export const CategoryRow = styled.div`
+    width: 100%;
+    height: 280px;
+`;

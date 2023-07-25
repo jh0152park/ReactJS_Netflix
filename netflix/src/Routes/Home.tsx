@@ -2,7 +2,6 @@ import { useQuery } from "react-query";
 import { IGetMoviesResult, getMovies } from "../api";
 import { makeImagePath } from "../utils";
 import { AnimatePresence, useScroll } from "framer-motion";
-import { useState } from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
 
 import {
@@ -10,6 +9,7 @@ import {
     BigMovie,
     BigOverview,
     BigTitle,
+    CategoryRow,
     Loader,
     Overlay,
     Wrapper,
@@ -52,7 +52,19 @@ function Home() {
                         bgIamgePath={data?.results[0].backdrop_path}
                     ></MainDisplay>
 
-                    <Slide data={data} title="Popular on Netflix"></Slide>
+                    {/* <Slide data={data} title="Popular on Netflix"></Slide> */}
+
+                    <CategoryRow>
+                        <Slide data={data} title="Popular on Netflix"></Slide>
+                    </CategoryRow>
+
+                    <CategoryRow>
+                        <Slide data={data} title="Popular on Netflix2"></Slide>
+                    </CategoryRow>
+
+                    <CategoryRow>
+                        <Slide data={data} title="Popular on Netflix3"></Slide>
+                    </CategoryRow>
 
                     <AnimatePresence>
                         {bigMovieMatch ? (

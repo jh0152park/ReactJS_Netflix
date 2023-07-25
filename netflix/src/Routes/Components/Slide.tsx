@@ -18,7 +18,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { makeImagePath } from "../../utils";
 import { useState } from "react";
-import { IGetMoviesResult } from "../../api";
 import { useHistory } from "react-router-dom";
 
 const offset = 6;
