@@ -43,6 +43,7 @@ const Overview = styled.p`
 const Slider = styled.div`
     position: relative;
     top: -200px;
+    margin-left: 60px;
 `;
 
 const Row = styled(motion.div)`
@@ -51,13 +52,14 @@ const Row = styled(motion.div)`
     grid-template-columns: repeat(6, 1fr);
     position: absolute;
     width: 100%;
+    box-sizing: border-box;
 `;
 
 const Box = styled(motion.div)<{ bgPhoto: string }>`
     background-image: url(${(props) => props.bgPhoto});
     background-size: cover;
     background-position: center center;
-    height: 200px;
+    height: 165px;
     font-size: 60px;
     color: black;
     border-radius: 3px;
@@ -168,6 +170,16 @@ const BigOverview = styled.p`
     top: -60px;
 `;
 
+const SubTitle = styled.div`
+    color: ${(props) => props.theme.white.lighter};
+    width: 300px;
+    height: 50px;
+    position: absolute;
+    top: -50px;
+    font-weight: 400;
+    font-size: 28px;
+`;
+
 function Home() {
     const history = useHistory();
     const bigMovieMatch = useRouteMatch<{ movieId: string }>(
@@ -230,18 +242,7 @@ function Home() {
                     </Banner>
 
                     <Slider>
-                        <div
-                            style={{
-                                color: "white",
-                                width: "150px",
-                                height: "30px",
-
-                                position: "absolute",
-                                top: -50,
-                            }}
-                        >
-                            Popular on Netflix
-                        </div>
+                        <SubTitle>Popular on Netflix</SubTitle>
                         <AnimatePresence
                             initial={false}
                             onExitComplete={toggleLeaving}
