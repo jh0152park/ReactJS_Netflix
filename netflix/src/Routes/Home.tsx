@@ -5,6 +5,12 @@ import { makeImagePath } from "../utils";
 import { AnimatePresence, motion, useScroll } from "framer-motion";
 import { useState } from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faInfo,
+    faInfoCircle,
+    faPlay,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Wrapper = styled.div`
     background-color: ${(props) => props.theme.black.deepDark};
@@ -42,7 +48,7 @@ const Overview = styled.p`
 
 const Slider = styled.div`
     position: relative;
-    top: -200px;
+    top: -190px;
     margin-left: 60px;
 `;
 
@@ -180,6 +186,47 @@ const SubTitle = styled.div`
     font-size: 28px;
 `;
 
+const Buttons = styled.div`
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 400px;
+    height: 100px;
+    gap: 15px;
+    font-weight: bold;
+    font-size: 22px;
+`;
+
+const PlayButton = styled(motion.div)`
+    width: 150px;
+    height: 60px;
+    border-radius: 5px;
+    background-color: ${(props) => props.theme.white.darker};
+    color: ${(props) => props.theme.black.darker};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    span {
+        margin-left: 10px;
+    }
+`;
+
+const MoreInfoButton = styled(motion.div)`
+    width: 200px;
+    height: 60px;
+    border-radius: 5px;
+    background-color: rgba(73, 74, 68, 0.8);
+    color: ${(props) => props.theme.white.darker};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    span {
+        margin-left: 10px;
+    }
+`;
+
 function Home() {
     const history = useHistory();
     const bigMovieMatch = useRouteMatch<{ movieId: string }>(
@@ -239,6 +286,20 @@ function Home() {
                     >
                         <Title>{data?.results[0].title}</Title>
                         <Overview>{data?.results[0].overview}</Overview>
+
+                        <Buttons>
+                            <PlayButton>
+                                <FontAwesomeIcon icon={faPlay} size="xl" />
+                                <span>Play</span>
+                            </PlayButton>
+                            <MoreInfoButton>
+                                <FontAwesomeIcon
+                                    icon={faInfoCircle}
+                                    size="xl"
+                                />
+                                <span>More Info</span>
+                            </MoreInfoButton>
+                        </Buttons>
                     </Banner>
 
                     <Slider>
