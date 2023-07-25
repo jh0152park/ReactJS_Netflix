@@ -3,7 +3,8 @@ import { styled } from "styled-components";
 
 export const Slider = styled.div`
     position: relative;
-    top: -190px;
+    /* top: -190px; */
+    top: -220px;
     margin-left: 60px;
     margin-right: 60px;
 `;
@@ -13,9 +14,9 @@ export const SubTitle = styled.div`
     width: 300px;
     height: 50px;
     position: absolute;
-    top: -50px;
+    top: -45px;
     font-weight: 400;
-    font-size: 28px;
+    font-size: 25px;
 `;
 
 export const LeftSlideButton = styled(motion.div)`
