@@ -288,11 +288,18 @@ function Home() {
                         <Overview>{data?.results[0].overview}</Overview>
 
                         <Buttons>
-                            <PlayButton>
+                            <PlayButton
+                                whileHover={{ cursor: "pointer", opacity: 0.8 }}
+                            >
                                 <FontAwesomeIcon icon={faPlay} size="xl" />
                                 <span>Play</span>
                             </PlayButton>
-                            <MoreInfoButton>
+                            <MoreInfoButton
+                                whileHover={{
+                                    cursor: "pointer",
+                                    backgroundColor: "rgba(73, 74, 68, 0.6)",
+                                }}
+                            >
                                 <FontAwesomeIcon
                                     icon={faInfoCircle}
                                     size="xl"
