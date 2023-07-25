@@ -82,15 +82,15 @@ const Box = styled(motion.div)<{ bgPhoto: string }>`
 `;
 
 const rowVariants = {
-    hidden: {
-        x: window.outerWidth + 5,
-    },
+    hidden: (slideDir: number) => ({
+        x: window.outerWidth * slideDir + 5,
+    }),
     visible: {
         x: 0,
     },
-    exit: {
-        x: -window.outerWidth - 5,
-    },
+    exit: (slideDir: number) => ({
+        x: -window.outerWidth * slideDir - 5,
+    }),
 };
 
 const boxVariants = {
@@ -265,6 +265,7 @@ function Home() {
 
     const [index, setIndex] = useState(0);
     const [leaving, setLeaving] = useState(false);
+    const [slideDir, setSlideDir] = useState(1);
 
     const { scrollY } = useScroll();
 
@@ -282,6 +283,7 @@ function Home() {
             const maxIndex = Math.floor(totalMoviesLength / offset) - 1;
             setIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
             setLeaving(true);
+            setSlideDir(1);
         }
     }
 
@@ -293,6 +295,7 @@ function Home() {
             const maxIndex = Math.floor(totalMoviesLength / offset) - 1;
             setIndex((prev) => (prev === 0 ? maxIndex : prev - 1));
             setLeaving(true);
+            setSlideDir(-1);
         }
     }
 
@@ -349,8 +352,9 @@ function Home() {
                         <AnimatePresence
                             initial={false}
                             onExitComplete={toggleLeaving}
+                            custom={slideDir}
                         >
-                            <LeftSlideButton>
+                            <LeftSlideButton onClick={decreaseIndex}>
                                 <FontAwesomeIcon
                                     icon={faAngleDoubleLeft}
                                     size="2x"
@@ -358,6 +362,7 @@ function Home() {
                             </LeftSlideButton>
 
                             <Row
+                                custom={slideDir}
                                 variants={rowVariants}
                                 initial="hidden"
                                 animate="visible"
@@ -393,7 +398,7 @@ function Home() {
                                         </Box>
                                     ))}
                             </Row>
-                            <RightSlideButton>
+                            <RightSlideButton onClick={increaseIndex}>
                                 <FontAwesomeIcon
                                     icon={faAngleDoubleRight}
                                     size="2x"
