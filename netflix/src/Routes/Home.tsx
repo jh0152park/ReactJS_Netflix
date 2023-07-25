@@ -7,6 +7,8 @@ import { useState } from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+    faAngleDoubleLeft,
+    faAngleDoubleRight,
     faInfo,
     faInfoCircle,
     faPlay,
@@ -50,6 +52,7 @@ const Slider = styled.div`
     position: relative;
     top: -190px;
     margin-left: 60px;
+    margin-right: 60px;
 `;
 
 const Row = styled(motion.div)`
@@ -227,6 +230,28 @@ const MoreInfoButton = styled(motion.div)`
     }
 `;
 
+const LeftSlideButton = styled(motion.div)`
+    position: absolute;
+    left: -45px;
+    top: 65px;
+    z-index: 99;
+    &:hover {
+        cursor: pointer;
+        scale: 1.1;
+    }
+`;
+
+const RightSlideButton = styled(motion.div)`
+    position: absolute;
+    right: -45px;
+    top: 65px;
+    z-index: 99;
+    &:hover {
+        cursor: pointer;
+        scale: 1.1;
+    }
+`;
+
 function Home() {
     const history = useHistory();
     const bigMovieMatch = useRouteMatch<{ movieId: string }>(
@@ -260,6 +285,17 @@ function Home() {
         }
     }
 
+    function decreaseIndex() {
+        if (data) {
+            if (leaving) return;
+
+            const totalMoviesLength = data.results.length - 1;
+            const maxIndex = Math.floor(totalMoviesLength / offset) - 1;
+            setIndex((prev) => (prev === 0 ? maxIndex : prev - 1));
+            setLeaving(true);
+        }
+    }
+
     function toggleLeaving() {
         setLeaving((prev) => !prev);
     }
@@ -279,7 +315,6 @@ function Home() {
             ) : (
                 <>
                     <Banner
-                        onClick={increaseIndex}
                         bgPhoto={makeImagePath(
                             data?.results[0].backdrop_path as ""
                         )}
@@ -315,6 +350,13 @@ function Home() {
                             initial={false}
                             onExitComplete={toggleLeaving}
                         >
+                            <LeftSlideButton>
+                                <FontAwesomeIcon
+                                    icon={faAngleDoubleLeft}
+                                    size="2x"
+                                />
+                            </LeftSlideButton>
+
                             <Row
                                 variants={rowVariants}
                                 initial="hidden"
@@ -351,6 +393,12 @@ function Home() {
                                         </Box>
                                     ))}
                             </Row>
+                            <RightSlideButton>
+                                <FontAwesomeIcon
+                                    icon={faAngleDoubleRight}
+                                    size="2x"
+                                />
+                            </RightSlideButton>
                         </AnimatePresence>
                     </Slider>
 
