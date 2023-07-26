@@ -20,13 +20,13 @@ export interface IGetMoviesResult {
     total_results: number;
 }
 
-export function getMovies() {
-    return fetch(`${BASE_URL}/movie/now_playing?api_key=${API_KEY}`).then(
-        (response) => response.json()
-    );
+export function getMovies(page: number) {
+    return fetch(
+        `${BASE_URL}/movie/now_playing?api_key=${API_KEY}&page=${page}`
+    ).then((response) => response.json());
 }
 
-export function getPopularMovies() {
+export function getPopularMovies(page: number) {
     const options = {
         method: "GET",
         headers: {
@@ -37,12 +37,12 @@ export function getPopularMovies() {
     };
 
     return fetch(
-        "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1",
+        `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`,
         options
     ).then((response) => response.json());
 }
 
-export function getTopRatedMovies() {
+export function getTopRatedMovies(page: number) {
     const options = {
         method: "GET",
         headers: {
@@ -53,12 +53,12 @@ export function getTopRatedMovies() {
     };
 
     return fetch(
-        "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1",
+        `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${page}`,
         options
     ).then((response) => response.json());
 }
 
-export function getUpcomingMovies() {
+export function getUpcomingMovies(page: number) {
     const options = {
         method: "GET",
         headers: {
@@ -69,7 +69,23 @@ export function getUpcomingMovies() {
     };
 
     return fetch(
-        "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=2",
+        `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=${page}`,
+        options
+    ).then((response) => response.json());
+}
+
+export function getPopularTV(page: number) {
+    const options = {
+        method: "GET",
+        headers: {
+            accept: "application/json",
+            Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3MzlhNzA4ODRhMTY2ZDQ2ODE0ZTYwNTMwMTU2OGQyZCIsInN1YiI6IjY0YmEyMDIwMzAwOWFhMDBlMjY0Y2VhZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.eHILwGMMFNYioeUQaVUSgf_kU4PRKZP99iDQOHXQRpI",
+        },
+    };
+
+    return fetch(
+        `https://api.themoviedb.org/3/tv/popular?language=en-US&page=${page}`,
         options
     ).then((response) => response.json());
 }
