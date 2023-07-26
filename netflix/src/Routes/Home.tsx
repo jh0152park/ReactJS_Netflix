@@ -3,7 +3,8 @@ import {
     IGetMoviesResult,
     getMovies,
     getPopularMovies,
-    getTopRatedMovie,
+    getTopRatedMovies,
+    getUpcomingMovies,
 } from "../api";
 import { makeImagePath } from "../utils";
 import { AnimatePresence, useScroll } from "framer-motion";
@@ -37,7 +38,10 @@ function Home() {
         useQuery<IGetMoviesResult>("popular", getPopularMovies);
 
     const { data: topRatedMovies, isLoading: topRatedMoviesLoading } =
-        useQuery<IGetMoviesResult>("topRated", getTopRatedMovie);
+        useQuery<IGetMoviesResult>("topRated", getTopRatedMovies);
+
+    const { data: upcomingMovies, isLoading: upcomingMoviesLoading } =
+        useQuery<IGetMoviesResult>("upcoming", getUpcomingMovies);
 
     const { scrollY } = useScroll();
 
@@ -57,7 +61,10 @@ function Home() {
 
     return (
         <Wrapper>
-            {isLoading && popularMoviesLoading && topRatedMoviesLoading ? (
+            {isLoading &&
+            popularMoviesLoading &&
+            topRatedMoviesLoading &&
+            upcomingMoviesLoading ? (
                 <Loader>Loading</Loader>
             ) : (
                 <>
@@ -80,6 +87,10 @@ function Home() {
 
                     <CategoryRow>
                         <Slide data={topRatedMovies} title="Top Rated"></Slide>
+                    </CategoryRow>
+
+                    <CategoryRow>
+                        <Slide data={upcomingMovies} title="UpComing"></Slide>
                     </CategoryRow>
 
                     <AnimatePresence>

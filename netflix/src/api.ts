@@ -42,7 +42,7 @@ export function getPopularMovies() {
     ).then((response) => response.json());
 }
 
-export function getTopRatedMovie() {
+export function getTopRatedMovies() {
     const options = {
         method: "GET",
         headers: {
@@ -54,6 +54,22 @@ export function getTopRatedMovie() {
 
     return fetch(
         "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1",
+        options
+    ).then((response) => response.json());
+}
+
+export function getUpcomingMovies() {
+    const options = {
+        method: "GET",
+        headers: {
+            accept: "application/json",
+            Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3MzlhNzA4ODRhMTY2ZDQ2ODE0ZTYwNTMwMTU2OGQyZCIsInN1YiI6IjY0YmEyMDIwMzAwOWFhMDBlMjY0Y2VhZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.eHILwGMMFNYioeUQaVUSgf_kU4PRKZP99iDQOHXQRpI",
+        },
+    };
+
+    return fetch(
+        "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1",
         options
     ).then((response) => response.json());
 }
