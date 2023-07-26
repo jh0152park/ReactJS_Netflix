@@ -3,6 +3,7 @@ import {
     IGetMoviesResult,
     getMovies,
     getPopularMovies,
+    getPopularTV,
     getTopRatedMovies,
     getUpcomingMovies,
 } from "../api";
@@ -22,6 +23,7 @@ import {
 } from "./Styles/HomeStyled";
 import MainDisplay from "./Components/MainDisplay";
 import Slide from "./Components/Slide";
+import { useEffect, useState } from "react";
 
 function Home() {
     const history = useHistory();
@@ -29,25 +31,23 @@ function Home() {
         "/movies/:movieId"
     );
 
-    const { data, isLoading } = useQuery<IGetMoviesResult>(
-        ["movies", "nowPlaying"],
-        getMovies
-    );
+    const { data: trendingMovies, isLoading: trendingMoviesLoading } =
+        useQuery<IGetMoviesResult>("movies", () => getMovies(1));
 
     const { data: popularMovies, isLoading: popularMoviesLoading } =
-        useQuery<IGetMoviesResult>("popular", getPopularMovies);
+        useQuery<IGetMoviesResult>("popular", () => getPopularMovies(2));
 
     const { data: topRatedMovies, isLoading: topRatedMoviesLoading } =
-        useQuery<IGetMoviesResult>("topRated", getTopRatedMovies);
+        useQuery<IGetMoviesResult>("topRated", () => getTopRatedMovies(1));
 
     const { data: upcomingMovies, isLoading: upcomingMoviesLoading } =
-        useQuery<IGetMoviesResult>("upcoming", getUpcomingMovies);
+        useQuery<IGetMoviesResult>("upcoming", () => getUpcomingMovies(2));
 
     const { scrollY } = useScroll();
 
     const clickedMovie =
         bigMovieMatch?.params.movieId &&
-        data?.results.find(
+        trendingMovies?.results.find(
             (movie) => movie.id + "" === bigMovieMatch.params.movieId
         );
 
@@ -55,13 +55,9 @@ function Home() {
         history.goBack();
     }
 
-    if (popularMoviesLoading) {
-        console.log(popularMovies);
-    }
-
     return (
         <Wrapper>
-            {isLoading &&
+            {trendingMoviesLoading &&
             popularMoviesLoading &&
             topRatedMoviesLoading &&
             upcomingMoviesLoading ? (
@@ -69,14 +65,14 @@ function Home() {
             ) : (
                 <>
                     <MainDisplay
-                        title={data?.results[0].title}
-                        overview={data?.results[0].overview}
-                        bgIamgePath={data?.results[0].backdrop_path}
+                        title={trendingMovies?.results[0].title}
+                        overview={trendingMovies?.results[0].overview}
+                        bgIamgePath={trendingMovies?.results[0].backdrop_path}
                     ></MainDisplay>
 
                     <CategoryRow>
                         <Slide
-                            data={data}
+                            data={trendingMovies}
                             title="Trending Now"
                             category="trd"
                         ></Slide>
@@ -101,7 +97,7 @@ function Home() {
                     <CategoryRow>
                         <Slide
                             data={upcomingMovies}
-                            title="Up Coming"
+                            title="Upcoming"
                             category="upc"
                         ></Slide>
                     </CategoryRow>
