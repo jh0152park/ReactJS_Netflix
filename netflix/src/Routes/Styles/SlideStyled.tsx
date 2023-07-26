@@ -10,12 +10,12 @@ export const Slider = styled.div`
 `;
 
 export const SubTitle = styled.div`
-    color: ${(props) => props.theme.white.lighter};
+    color: ${(props) => props.theme.white.darker};
     width: 300px;
     height: 50px;
     position: absolute;
     top: -45px;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 25px;
 `;
 

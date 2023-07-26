@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { IGetMoviesResult, getMovies } from "../api";
+import { IGetMoviesResult, getMovies, getPopularMovies } from "../api";
 import { makeImagePath } from "../utils";
 import { AnimatePresence, useScroll } from "framer-motion";
 import { useHistory, useRouteMatch } from "react-router-dom";
@@ -28,6 +28,9 @@ function Home() {
         getMovies
     );
 
+    const { data: popularMovies, isLoading: popularMoviesLoading } =
+        useQuery<IGetMoviesResult>("popular", getPopularMovies);
+
     const { scrollY } = useScroll();
 
     const clickedMovie =
@@ -40,9 +43,13 @@ function Home() {
         history.goBack();
     }
 
+    if (popularMoviesLoading) {
+        console.log(popularMovies);
+    }
+
     return (
         <Wrapper>
-            {isLoading ? (
+            {isLoading && popularMoviesLoading ? (
                 <Loader>Loading</Loader>
             ) : (
                 <>
@@ -52,14 +59,15 @@ function Home() {
                         bgIamgePath={data?.results[0].backdrop_path}
                     ></MainDisplay>
 
-                    {/* <Slide data={data} title="Popular on Netflix"></Slide> */}
-
                     <CategoryRow>
-                        <Slide data={data} title="Popular on Netflix"></Slide>
+                        <Slide data={data} title="Trending Now"></Slide>
                     </CategoryRow>
 
                     <CategoryRow>
-                        <Slide data={data} title="Popular on Netflix2"></Slide>
+                        <Slide
+                            data={popularMovies}
+                            title="Popular on Netflix"
+                        ></Slide>
                     </CategoryRow>
 
                     <CategoryRow>
