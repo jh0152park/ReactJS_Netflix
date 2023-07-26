@@ -1,5 +1,10 @@
 import { useQuery } from "react-query";
-import { IGetMoviesResult, getMovies, getPopularMovies } from "../api";
+import {
+    IGetMoviesResult,
+    getMovies,
+    getPopularMovies,
+    getTopRatedMovie,
+} from "../api";
 import { makeImagePath } from "../utils";
 import { AnimatePresence, useScroll } from "framer-motion";
 import { useHistory, useRouteMatch } from "react-router-dom";
@@ -31,6 +36,9 @@ function Home() {
     const { data: popularMovies, isLoading: popularMoviesLoading } =
         useQuery<IGetMoviesResult>("popular", getPopularMovies);
 
+    const { data: topRatedMovies, isLoading: topRatedMoviesLoading } =
+        useQuery<IGetMoviesResult>("topRated", getTopRatedMovie);
+
     const { scrollY } = useScroll();
 
     const clickedMovie =
@@ -49,7 +57,7 @@ function Home() {
 
     return (
         <Wrapper>
-            {isLoading && popularMoviesLoading ? (
+            {isLoading && popularMoviesLoading && topRatedMoviesLoading ? (
                 <Loader>Loading</Loader>
             ) : (
                 <>
@@ -71,7 +79,7 @@ function Home() {
                     </CategoryRow>
 
                     <CategoryRow>
-                        <Slide data={data} title="Popular on Netflix3"></Slide>
+                        <Slide data={topRatedMovies} title="Top Rated"></Slide>
                     </CategoryRow>
 
                     <AnimatePresence>
