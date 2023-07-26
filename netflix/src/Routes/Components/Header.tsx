@@ -217,7 +217,7 @@ function Header() {
                         </Item>
                     </Link>
 
-                    <Link to="/movie">
+                    {/* <Link to="/movie">
                         <Item>
                             Movies
                             {movieMatch && <Circle layoutId="statusDot" />}
@@ -245,7 +245,7 @@ function Header() {
                                 <Circle layoutId="statusDot" />
                             )}
                         </Item>
-                    </Link>
+                    </Link> */}
                 </Items>
             </Column>
             <Column>
