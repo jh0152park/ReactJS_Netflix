@@ -75,22 +75,35 @@ function Home() {
                     ></MainDisplay>
 
                     <CategoryRow>
-                        <Slide data={data} title="Trending Now"></Slide>
+                        <Slide
+                            data={data}
+                            title="Trending Now"
+                            category="trd"
+                        ></Slide>
                     </CategoryRow>
 
                     <CategoryRow>
                         <Slide
                             data={popularMovies}
                             title="Popular on Netflix"
+                            category="pop"
                         ></Slide>
                     </CategoryRow>
 
                     <CategoryRow>
-                        <Slide data={topRatedMovies} title="Top Rated"></Slide>
+                        <Slide
+                            data={topRatedMovies}
+                            title="Top Rated"
+                            category="top"
+                        ></Slide>
                     </CategoryRow>
 
                     <CategoryRow>
-                        <Slide data={upcomingMovies} title="UpComing"></Slide>
+                        <Slide
+                            data={upcomingMovies}
+                            title="Up Coming"
+                            category="upc"
+                        ></Slide>
                     </CategoryRow>
 
                     <AnimatePresence>

@@ -4,7 +4,7 @@ import { styled } from "styled-components";
 export const Wrapper = styled.div`
     background-color: ${(props) => props.theme.black.deepDark};
     width: 100%;
-    height: 300vh;
+    height: 200vh;
 `;
 
 export const Loader = styled.div`
