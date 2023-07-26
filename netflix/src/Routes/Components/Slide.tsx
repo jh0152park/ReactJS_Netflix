@@ -96,7 +96,9 @@ function Slide({ data, title, category }: any) {
                                     onBoxClicked(category + movie.id)
                                 }
                                 bgPhoto={makeImagePath(
-                                    movie.backdrop_path,
+                                    movie.backdrop_path
+                                        ? movie.backdrop_path
+                                        : movie.poster_path,
                                     "w500"
                                 )}
                             >
