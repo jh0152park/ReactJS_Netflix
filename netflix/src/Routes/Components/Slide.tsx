@@ -22,7 +22,7 @@ import { useHistory } from "react-router-dom";
 
 const offset = 6;
 
-function Slide({ data, title }: any) {
+function Slide({ data, title, category }: any) {
     const history = useHistory();
     const [index, setIndex] = useState(0);
     const [leaving, setLeaving] = useState(false);
@@ -90,9 +90,11 @@ function Slide({ data, title }: any) {
                                 whileHover="hover"
                                 initial="normal"
                                 transition={{ type: "tween" }}
-                                key={movie.id}
-                                layoutId={movie.id + ""}
-                                onClick={() => onBoxClicked(movie.id)}
+                                key={category + movie.id}
+                                layoutId={category + movie.id + ""}
+                                onClick={() =>
+                                    onBoxClicked(category + movie.id)
+                                }
                                 bgPhoto={makeImagePath(
                                     movie.backdrop_path,
                                     "w500"
