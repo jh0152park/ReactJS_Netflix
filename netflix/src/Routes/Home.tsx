@@ -1,6 +1,7 @@
 import { useQuery } from "react-query";
 import {
     IGetMoviesResult,
+    IMovie,
     getMovies,
     getPopularMovies,
     getPopularTV,
@@ -45,16 +46,47 @@ function Home() {
 
     const { scrollY } = useScroll();
 
-    const clickedMovie =
-        bigMovieMatch?.params.movieId &&
-        trendingMovies?.results.find(
-            (movie) => movie.id + "" === bigMovieMatch.params.movieId
-        );
+    // const clickedMovie =
+    //     bigMovieMatch?.params.movieId &&
+    //     trendingMovies?.results.find(
+    //         (movie) => movie.id + "" === bigMovieMatch.params.movieId.slice(3)
+    //     );
+
+    let clickedMovie: any = {
+        backdrop_path: "",
+        poster_path: "",
+        title: "",
+        overview: "",
+        id: 0,
+    };
 
     function onOverlayClicked() {
         history.goBack();
     }
 
+    function isMovieClicked() {
+        let moives: any;
+        let category = "";
+
+        if (bigMovieMatch?.params.movieId) {
+            category = bigMovieMatch?.params.movieId.slice(0, 3);
+            if (category === "trd") {
+                moives = trendingMovies;
+            } else if (category === "pop") {
+                moives = popularMovies;
+            } else if (category === "top") {
+                moives = topRatedMovies;
+            } else {
+                moives = upcomingMovies;
+            }
+            clickedMovie = moives?.results.find(
+                (movie: any) =>
+                    movie.id + "" === bigMovieMatch.params.movieId.slice(3)
+            );
+        }
+    }
+
+    isMovieClicked();
     return (
         <Wrapper>
             {trendingMoviesLoading &&
