@@ -76,9 +76,9 @@ function Home() {
     isMovieClicked();
     return (
         <Wrapper>
-            {trendingMoviesLoading &&
-            popularMoviesLoading &&
-            topRatedMoviesLoading &&
+            {trendingMoviesLoading ||
+            popularMoviesLoading ||
+            topRatedMoviesLoading ||
             upcomingMoviesLoading ? (
                 <Loader>Loading</Loader>
             ) : (
