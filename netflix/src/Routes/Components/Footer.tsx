@@ -1,6 +1,21 @@
-import { SNS, Wrapper } from "../Styles/FooterStyled";
+import { Links, SNS, Wrapper } from "../Styles/FooterStyled";
 
 function Footer() {
+    const links = [
+        "Audio Description",
+        "Help Center",
+        "Gift Cards",
+        "Media Center",
+        "Inverstor Relations",
+        "Jobs",
+        "Terms of Use",
+        "Privacy",
+        "Legal Notices",
+        "Cookie Perferences",
+        "Corporate Information",
+        "Contact Us",
+    ];
+
     return (
         <>
             <Wrapper>
@@ -97,6 +112,12 @@ function Footer() {
                         </svg>
                     </a>
                 </SNS>
+
+                <Links>
+                    {links.map((link) => (
+                        <span>{link}</span>
+                    ))}
+                </Links>
             </Wrapper>
         </>
     );
