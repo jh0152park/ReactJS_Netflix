@@ -4,8 +4,10 @@ import {
     BigMovie,
     BigOverview,
     BigTitle,
+    Description,
     Explain,
     Overlay,
+    Subtitle,
     Vote,
 } from "../Styles/MovieDetailStyled";
 import { makeImagePath } from "../../utils";
@@ -55,15 +57,25 @@ function MovieDatail({ bigMovieMatch, clickedMovie, y }: any) {
         }
     }
 
+    function getGenres() {
+        if (!detailLoading && detail?.genres) {
+            let gen = "";
+            for (var i of detail?.genres) {
+                gen += i.name + ", ";
+            }
+            return gen.slice(0, gen.length - 2);
+        }
+    }
+
     videoKey = getVideoId();
 
-    if (!detailLoading) {
-        console.log(detail?.genres);
-        console.log(detail?.homepage);
-        console.log(detail?.release_date);
-        console.log(detail?.runtime);
-        console.log(detail?.vote_average);
-    }
+    // if (!detailLoading) {
+    //     console.log(detail?.genres);
+    //     console.log(detail?.homepage);
+    //     console.log(detail?.release_date);
+    //     console.log(detail?.runtime);
+    //     console.log(detail?.vote_average);
+    // }
 
     return (
         <>
@@ -122,6 +134,11 @@ function MovieDatail({ bigMovieMatch, clickedMovie, y }: any) {
                                     <BigOverview>
                                         {clickedMovie.overview}
                                     </BigOverview>
+
+                                    <Description>
+                                        <Subtitle>Genres: </Subtitle>
+                                        {getGenres()}
+                                    </Description>
                                 </Explain>
                             </>
                         )}
