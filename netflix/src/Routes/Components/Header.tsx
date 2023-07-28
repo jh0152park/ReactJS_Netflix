@@ -18,6 +18,7 @@ const Navigation = styled(motion.nav)`
     color: white;
     height: 40px;
     box-sizing: border-box;
+    z-index: 99;
 `;
 
 const Column = styled.div`
