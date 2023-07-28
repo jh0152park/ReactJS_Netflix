@@ -1,4 +1,4 @@
-import { Links, SNS, ServiceCode, Wrapper } from "../Styles/FooterStyled";
+import { Info, Links, SNS, ServiceCode, Wrapper } from "../Styles/FooterStyled";
 
 function Footer() {
     const links = [
@@ -14,6 +14,16 @@ function Footer() {
         "Cookie Perferences",
         "Corporate Information",
         "Contact Us",
+    ];
+
+    const texts = [
+        "Netflix Services Korea Ltd. E-Commerce Registration Number: Je 2018-Seoul Jong-ro-0426 Ho. Phone: ",
+        "Representative: Reginald Shawn Thompson",
+        "Email: korea@netflix.com",
+        "Address: 20F, Tower A, Centropolis Building 26, Ujeongguk-ro, Jongno-gu, Seoul, 03161 Republic of Korea",
+        "Business registration number: 165-87-00119",
+        "Hosted by: Amazon Web Services Inc.",
+        "KFTC website",
     ];
 
     return (
@@ -120,6 +130,12 @@ function Footer() {
                 </Links>
 
                 <ServiceCode>Service Code</ServiceCode>
+
+                <Info>
+                    {texts.map((text) => (
+                        <p>{text}</p>
+                    ))}
+                </Info>
             </Wrapper>
         </>
     );
