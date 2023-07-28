@@ -102,6 +102,7 @@ function Slide({ data, title, category }: any) {
                                     "w500"
                                 )}
                             >
+                                <img src="https://www.svgrepo.com/show/303341/netflix-1-logo.svg"></img>
                                 <Info variants={infoVariants}>
                                     <h4>{movie.title}</h4>
                                 </Info>

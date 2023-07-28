@@ -58,12 +58,20 @@ export const Box = styled(motion.div)<{ bgPhoto: string }>`
     font-size: 60px;
     color: black;
     border-radius: 3px;
+    position: relative;
 
     &:first-child {
         transform-origin: center left;
     }
     &:last-child {
         transform-origin: center right;
+    }
+    img {
+        width: 25px;
+        height: 35px;
+        position: absolute;
+        top: 5px;
+        left: 5px;
     }
 `;
 
@@ -76,9 +84,10 @@ export const Info = styled(motion.div)`
     width: 100%;
     bottom: 0;
     box-sizing: border-box;
+
     h4 {
-        text-align: center;
-        font-size: 18px;
+        text-align: left;
+        font-size: 15px;
     }
 `;
 
