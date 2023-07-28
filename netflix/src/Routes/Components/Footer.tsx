@@ -1,4 +1,4 @@
-import { Links, SNS, Wrapper } from "../Styles/FooterStyled";
+import { Links, SNS, ServiceCode, Wrapper } from "../Styles/FooterStyled";
 
 function Footer() {
     const links = [
@@ -118,6 +118,8 @@ function Footer() {
                         <span>{link}</span>
                     ))}
                 </Links>
+
+                <ServiceCode>Service Code</ServiceCode>
             </Wrapper>
         </>
     );
