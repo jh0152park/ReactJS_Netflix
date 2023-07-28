@@ -7,7 +7,9 @@ import {
     Description,
     Explain,
     Overlay,
+    SubRow,
     Subtitle,
+    SubtitleText,
     Vote,
 } from "../Styles/MovieDetailStyled";
 import { makeImagePath } from "../../utils";
@@ -70,11 +72,8 @@ function MovieDatail({ bigMovieMatch, clickedMovie, y }: any) {
     videoKey = getVideoId();
 
     // if (!detailLoading) {
-    //     console.log(detail?.genres);
     //     console.log(detail?.homepage);
-    //     console.log(detail?.release_date);
-    //     console.log(detail?.runtime);
-    //     console.log(detail?.vote_average);
+
     // }
 
     return (
@@ -136,8 +135,38 @@ function MovieDatail({ bigMovieMatch, clickedMovie, y }: any) {
                                     </BigOverview>
 
                                     <Description>
-                                        <Subtitle>Genres: </Subtitle>
-                                        {getGenres()}
+                                        <SubRow>
+                                            <Subtitle>Genres: </Subtitle>
+                                            <SubtitleText>
+                                                {getGenres()}
+                                            </SubtitleText>
+                                        </SubRow>
+
+                                        <SubRow>
+                                            <Subtitle>Runtime: </Subtitle>
+                                            <SubtitleText>
+                                                {detail?.runtime} Minutes
+                                            </SubtitleText>
+                                        </SubRow>
+
+                                        <SubRow>
+                                            <Subtitle>Release Date: </Subtitle>
+                                            <SubtitleText>
+                                                {detail?.release_date}
+                                            </SubtitleText>
+                                        </SubRow>
+
+                                        <SubRow>
+                                            <Subtitle>Homepage: </Subtitle>
+                                            <a
+                                                href={detail?.homepage}
+                                                target="_blank"
+                                            >
+                                                <SubtitleText>
+                                                    {detail?.homepage}
+                                                </SubtitleText>
+                                            </a>
+                                        </SubRow>
                                     </Description>
                                 </Explain>
                             </>
