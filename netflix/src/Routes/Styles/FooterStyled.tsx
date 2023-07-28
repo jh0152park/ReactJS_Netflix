@@ -39,3 +39,20 @@ export const Links = styled.div`
         text-decoration: underline;
     }
 `;
+
+export const ServiceCode = styled.div`
+    width: 100px;
+    height: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 13px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+        cursor: pointer;
+        color: rgba(255, 255, 255, 1);
+    }
+`;
