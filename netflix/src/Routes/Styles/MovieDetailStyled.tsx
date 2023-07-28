@@ -20,6 +20,7 @@ export const BigMovie = styled(motion.div)`
     margin: 0 auto;
     border-radius: 15px;
     overflow: hidden;
+    z-index: 99;
 `;
 
 export const BigCover = styled.div`
@@ -61,9 +62,21 @@ export const BigOverview = styled.p`
 
 export const Description = styled.div`
     width: 50%;
-    padding: 20px;
+    padding: 20px 0px 20px 50px;
     position: relative;
     top: -30px;
 `;
 
-export const Subtitle = styled.span``;
+export const Subtitle = styled.span`
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 13px;
+    margin-right: 5px;
+`;
+
+export const SubtitleText = styled.span`
+    font-size: 14px;
+`;
+
+export const SubRow = styled.div`
+    margin-bottom: 10px;
+`;

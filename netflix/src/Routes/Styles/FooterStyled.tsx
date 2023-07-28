@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { styled } from "styled-components";
 
 export const Wrapper = styled.div`
-    width: 850px;
+    width: 600px;
     height: 350px;
     /* background-color: rgba(1, 1, 1, 0.5); */
     position: absolute;
