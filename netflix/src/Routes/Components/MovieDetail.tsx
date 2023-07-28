@@ -4,17 +4,19 @@ import {
     BigMovie,
     BigOverview,
     BigTitle,
+    Explain,
     Overlay,
+    Vote,
 } from "../Styles/MovieDetailStyled";
 import { makeImagePath } from "../../utils";
 import YouTube from "react-youtube";
-import { IGetMoviesResult, getMovieVideo } from "../../api";
+import { IGetMoviesResult, getMovieDetail, getMovieVideo } from "../../api";
 import { useQuery } from "react-query";
 
 interface IMovieDetails {
     genres: [{ id: number; name: string }];
     homepage: string;
-    release_data: string;
+    release_date: string;
     runtime: number;
     vote_average: number;
 }
@@ -26,6 +28,11 @@ function MovieDatail({ bigMovieMatch, clickedMovie, y }: any) {
 
     const { data: videos, isLoading: videosLoading } = useQuery("videos", () =>
         getMovieVideo(originId)
+    );
+
+    const { data: detail, isLoading: detailLoading } = useQuery<IMovieDetails>(
+        "detail",
+        () => getMovieDetail(originId)
     );
 
     function onOverlayClicked() {
@@ -50,9 +57,17 @@ function MovieDatail({ bigMovieMatch, clickedMovie, y }: any) {
 
     videoKey = getVideoId();
 
+    if (!detailLoading) {
+        console.log(detail?.genres);
+        console.log(detail?.homepage);
+        console.log(detail?.release_date);
+        console.log(detail?.runtime);
+        console.log(detail?.vote_average);
+    }
+
     return (
         <>
-            {videosLoading ? null : (
+            {videosLoading || detailLoading ? null : (
                 <>
                     <Overlay
                         onClick={onOverlayClicked}
@@ -91,10 +106,23 @@ function MovieDatail({ bigMovieMatch, clickedMovie, y }: any) {
                                         }}
                                     ></YouTube>
                                 )}
-                                <BigTitle>{clickedMovie.title}</BigTitle>
-                                <BigOverview>
-                                    {clickedMovie.overview}
-                                </BigOverview>
+                                <BigTitle>
+                                    {clickedMovie.title}
+                                    <Vote>
+                                        {detail?.vote_average
+                                            ? (
+                                                  detail?.vote_average * 10
+                                              ).toFixed()
+                                            : detail?.vote_average}
+                                        % Match
+                                    </Vote>
+                                </BigTitle>
+
+                                <Explain>
+                                    <BigOverview>
+                                        {clickedMovie.overview}
+                                    </BigOverview>
+                                </Explain>
                             </>
                         )}
                     </BigMovie>
