@@ -8,7 +8,7 @@ import {
     getTopRatedMovies,
     getUpcomingMovies,
 } from "../api";
-import { makeImagePath } from "../utils";
+
 import { AnimatePresence, useScroll } from "framer-motion";
 import { useHistory, useRouteMatch } from "react-router-dom";
 
@@ -16,6 +16,8 @@ import { CategoryRow, Loader, Wrapper } from "./Styles/HomeStyled";
 import MainDisplay from "./Components/MainDisplay";
 import Slide from "./Components/Slide";
 import MovieDatail from "./Components/MovieDetail";
+import { styled } from "styled-components";
+import Footer from "./Components/Footer";
 
 function Home() {
     const { scrollY } = useScroll();
@@ -130,6 +132,8 @@ function Home() {
                             </>
                         ) : null}
                     </AnimatePresence>
+
+                    <Footer></Footer>
                 </>
             )}
         </Wrapper>

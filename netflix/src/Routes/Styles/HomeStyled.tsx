@@ -5,6 +5,7 @@ export const Wrapper = styled.div`
     background-color: ${(props) => props.theme.black.deepDark};
     width: 100%;
     height: 200vh;
+    position: relative;
 `;
 
 export const Loader = styled.div`
