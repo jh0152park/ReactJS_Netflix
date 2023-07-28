@@ -8,34 +8,26 @@ import {
     PlayButton,
     Title,
 } from "../Styles/MainDisplayStyled";
+import { useHistory } from "react-router-dom";
 
 interface IDisplay {
+    id: string;
     title?: string;
     overview?: string;
     bgIamgePath?: string;
 }
 
-function MainDisplay({ title, overview, bgIamgePath }: IDisplay) {
+function MainDisplay({ id, title, overview, bgIamgePath }: IDisplay) {
+    const history = useHistory();
+
+    function onMoreInfoButtonClick(id: string) {
+        history.push(`/movies/trd${id}`);
+    }
+
     return (
         <Banner bgPhoto={makeImagePath(bgIamgePath as "")}>
             <Title>{title}</Title>
             <Overview>{overview}</Overview>
-
-            {/* <YouTube
-                videoId="GRyt3Ov4zz0"
-                opts={{
-                    width: "100%",
-                    height: "2080",
-                    playerVars: {
-                        autoPlay: true,
-                        rel: 0,
-                        modestbranding: 1,
-                    },
-                }}
-                onEnd={(e) => {
-                    e.target.stopVideo(0);
-                }}
-            ></YouTube> */}
 
             <Buttons>
                 <PlayButton whileHover={{ cursor: "pointer", opacity: 0.8 }}>
@@ -60,6 +52,8 @@ function MainDisplay({ title, overview, bgIamgePath }: IDisplay) {
                         cursor: "pointer",
                         backgroundColor: "rgba(73, 74, 68, 0.6)",
                     }}
+                    onClick={() => onMoreInfoButtonClick(id)}
+                    layoutId={`trd${id}`}
                 >
                     <svg
                         width="30"
