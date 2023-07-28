@@ -12,22 +12,13 @@ import { makeImagePath } from "../utils";
 import { AnimatePresence, useScroll } from "framer-motion";
 import { useHistory, useRouteMatch } from "react-router-dom";
 
-import {
-    BigCover,
-    BigMovie,
-    BigOverview,
-    BigTitle,
-    CategoryRow,
-    Loader,
-    Overlay,
-    Wrapper,
-} from "./Styles/HomeStyled";
+import { CategoryRow, Loader, Wrapper } from "./Styles/HomeStyled";
 import MainDisplay from "./Components/MainDisplay";
 import Slide from "./Components/Slide";
-import { useEffect, useState } from "react";
+import MovieDatail from "./Components/MovieDetail";
 
 function Home() {
-    const history = useHistory();
+    const { scrollY } = useScroll();
     const bigMovieMatch = useRouteMatch<{ movieId: string }>(
         "/movies/:movieId"
     );
@@ -44,8 +35,6 @@ function Home() {
     const { data: upcomingMovies, isLoading: upcomingMoviesLoading } =
         useQuery<IGetMoviesResult>("upcoming", () => getUpcomingMovies(2));
 
-    const { scrollY } = useScroll();
-
     // const clickedMovie =
     //     bigMovieMatch?.params.movieId &&
     //     trendingMovies?.results.find(
@@ -59,10 +48,6 @@ function Home() {
         overview: "",
         id: 0,
     };
-
-    function onOverlayClicked() {
-        history.goBack();
-    }
 
     function isMovieClicked() {
         let moives: any;
@@ -137,34 +122,11 @@ function Home() {
                     <AnimatePresence>
                         {bigMovieMatch ? (
                             <>
-                                <Overlay
-                                    onClick={onOverlayClicked}
-                                    animate={{ opacity: 1 }}
-                                    exit={{ opacity: 0 }}
-                                />
-                                <BigMovie
-                                    layoutId={bigMovieMatch.params.movieId}
-                                    style={{ top: scrollY.get() + 100 }}
-                                >
-                                    {clickedMovie && (
-                                        <>
-                                            <BigCover
-                                                style={{
-                                                    backgroundImage: `url(${makeImagePath(
-                                                        clickedMovie.backdrop_path,
-                                                        "w500"
-                                                    )})`,
-                                                }}
-                                            ></BigCover>
-                                            <BigTitle>
-                                                {clickedMovie.title}
-                                            </BigTitle>
-                                            <BigOverview>
-                                                {clickedMovie.overview}
-                                            </BigOverview>
-                                        </>
-                                    )}
-                                </BigMovie>
+                                <MovieDatail
+                                    bigMovieMatch={bigMovieMatch}
+                                    clickedMovie={clickedMovie}
+                                    y={scrollY.get()}
+                                ></MovieDatail>
                             </>
                         ) : null}
                     </AnimatePresence>
