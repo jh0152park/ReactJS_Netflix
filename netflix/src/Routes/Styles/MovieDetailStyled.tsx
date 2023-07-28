@@ -37,14 +37,6 @@ export const BigTitle = styled.h3`
     top: -20px;
 `;
 
-export const BigOverview = styled.p`
-    color: ${(props) => props.theme.white.lighter};
-    padding: 20px;
-    position: relative;
-    top: -30px;
-    width: 400px;
-`;
-
 export const Vote = styled.span`
     color: #45d169;
     font-size: 20px;
@@ -58,3 +50,20 @@ export const Explain = styled.div`
     display: flex;
     justify-content: space-between;
 `;
+
+export const BigOverview = styled.p`
+    color: ${(props) => props.theme.white.lighter};
+    padding: 20px;
+    position: relative;
+    top: -30px;
+    width: 50%;
+`;
+
+export const Description = styled.div`
+    width: 50%;
+    padding: 20px;
+    position: relative;
+    top: -30px;
+`;
+
+export const Subtitle = styled.span``;
