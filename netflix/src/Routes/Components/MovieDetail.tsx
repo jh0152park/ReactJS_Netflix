@@ -11,6 +11,14 @@ import YouTube from "react-youtube";
 import { IGetMoviesResult, getMovieVideo } from "../../api";
 import { useQuery } from "react-query";
 
+interface IMovieDetails {
+    genres: [{ id: number; name: string }];
+    homepage: string;
+    release_data: string;
+    runtime: number;
+    vote_average: number;
+}
+
 function MovieDatail({ bigMovieMatch, clickedMovie, y }: any) {
     let videoKey = "";
     const history = useHistory();
