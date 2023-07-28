@@ -84,6 +84,7 @@ function Home() {
             ) : (
                 <>
                     <MainDisplay
+                        id={trendingMovies?.results[0].id + ""}
                         title={trendingMovies?.results[0].title}
                         overview={trendingMovies?.results[0].overview}
                         bgIamgePath={trendingMovies?.results[0].backdrop_path}

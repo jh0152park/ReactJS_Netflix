@@ -34,12 +34,12 @@ export const BigTitle = styled.h3`
     font-size: 28px;
     padding: 20px;
     position: relative;
-    top: -60px;
+    top: -20px;
 `;
 
 export const BigOverview = styled.p`
     color: ${(props) => props.theme.white.lighter};
     padding: 20px;
     position: relative;
-    top: -60px;
+    top: -30px;
 `;
