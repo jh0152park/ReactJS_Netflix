@@ -23,9 +23,7 @@ import Footer from "./Components/Footer";
 
 function Tv() {
     const { scrollY } = useScroll();
-    const bigMovieMatch = useRouteMatch<{ movieId: string }>(
-        "/movies/:movieId"
-    );
+    const bigTVMatch = useRouteMatch<{ tvId: string }>("/tv/tv_:tvId");
 
     const { data: aringTV, isLoading: aringTVLoading } =
         useQuery<IGetMoviesResult>("airing", () => getAiringTodayTV());
@@ -48,29 +46,27 @@ function Tv() {
     };
 
     function isTvClicked() {
-        let moives: any;
+        let tvs: any;
         let category = "";
 
-        if (bigMovieMatch?.params.movieId) {
-            category = bigMovieMatch?.params.movieId.slice(0, 3);
-            if (category === "tv_art") {
-                moives = aringTV;
-            } else if (category === "tv_pop") {
-                moives = popularTV;
-            } else if (category === "tv_top") {
-                moives = topRatedTV;
+        if (bigTVMatch?.params.tvId) {
+            category = bigTVMatch?.params.tvId.slice(0, 3);
+            if (category === "art") {
+                tvs = aringTV;
+            } else if (category === "pop") {
+                tvs = popularTV;
+            } else if (category === "top") {
+                tvs = topRatedTV;
             } else {
-                moives = onTheAirTV;
+                tvs = onTheAirTV;
             }
-            clickedMovie = moives?.results.find(
-                (movie: any) =>
-                    movie.id + "" === bigMovieMatch.params.movieId.slice(3)
+            clickedMovie = tvs?.results.find(
+                (tv: any) => tv.id + "" === bigTVMatch.params.tvId.slice(3)
             );
         }
     }
 
     isTvClicked();
-
     return (
         <Wrapper>
             {aringTVLoading ||
@@ -120,10 +116,10 @@ function Tv() {
                     </CategoryRow>
 
                     <AnimatePresence>
-                        {bigMovieMatch ? (
+                        {bigTVMatch ? (
                             <>
                                 <MovieDatail
-                                    bigMovieMatch={bigMovieMatch}
+                                    bigMovieMatch={bigTVMatch}
                                     clickedMovie={clickedMovie}
                                     y={scrollY.get()}
                                 ></MovieDatail>

@@ -108,7 +108,9 @@ function Slide({ data, title, category }: any) {
                             >
                                 <img src="https://www.svgrepo.com/show/303341/netflix-1-logo.svg"></img>
                                 <Info variants={infoVariants}>
-                                    <h4>{movie.name}</h4>
+                                    <h4>
+                                        {movie.title ? movie.title : movie.name}
+                                    </h4>
                                 </Info>
                             </Box>
                         ))}

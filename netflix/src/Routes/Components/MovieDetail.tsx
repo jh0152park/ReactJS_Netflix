@@ -28,7 +28,9 @@ interface IMovieDetails {
 function MovieDatail({ bigMovieMatch, clickedMovie, y }: any) {
     let videoKey = "";
     const history = useHistory();
-    const originId = bigMovieMatch.params.movieId.slice(3);
+    const originId = bigMovieMatch.params.movieId
+        ? bigMovieMatch.params.movieId.slice(3)
+        : bigMovieMatch.params.tvId.slice(3);
 
     const { data: videos, isLoading: videosLoading } = useQuery("videos", () =>
         getMovieVideo(originId)

@@ -10,7 +10,7 @@ import {
 } from "../api";
 
 import { AnimatePresence, useScroll } from "framer-motion";
-import { useHistory, useRouteMatch } from "react-router-dom";
+import { useHistory, useParams, useRouteMatch } from "react-router-dom";
 
 import { CategoryRow, Loader, Wrapper } from "./Styles/HomeStyled";
 import MainDisplay from "./Components/MainDisplay";
