@@ -22,6 +22,7 @@ import {
     getTVVideo,
 } from "../../api";
 import { useQuery } from "react-query";
+import { useEffect } from "react";
 
 interface IMovieDetails {
     genres: [{ id: number; name: string }];
@@ -42,57 +43,76 @@ function MovieDatail({ bigMovieMatch, clickedMovie, y }: any) {
         ? bigMovieMatch.params.movieId
         : "tv_" + bigMovieMatch.params.tvId;
 
-    console.log(originId);
-    console.log(inputId);
-
     const isMovie = bigMovieMatch.params.movieId ? true : false;
 
-    const { data: videos, isLoading: videosLoading } = useQuery("videos", () =>
-        getMovieVideo(originId)
-    );
+    console.log(originId);
+    console.log(inputId);
+    console.log(`is movie is : ${isMovie}`);
 
-    const { data: TVVideos, isLoading: TVVideosLoading } = useQuery(
-        "TVVideos",
-        () => getTVVideo(originId)
-    );
+    const {
+        data: videos,
+        isLoading: videosLoading,
+        refetch: videoRefresh,
+    } = useQuery("videos", () => getMovieVideo(originId));
 
-    const { data: detail, isLoading: detailLoading } = useQuery<IMovieDetails>(
-        "detail",
-        () => getMovieDetail(originId)
-    );
+    const {
+        data: TVVideos,
+        isLoading: TVVideosLoading,
+        refetch: TVRefresh,
+    } = useQuery("TVVideos", () => getTVVideo(originId));
 
-    const { data: TVDetail, isLoading: TVDetailLoading } =
-        useQuery<IMovieDetails>("detail", () => getTVDetail(originId));
+    const {
+        data: detail,
+        isLoading: detailLoading,
+        refetch: movieDetailRefresh,
+    } = useQuery<IMovieDetails>("detail", () => getMovieDetail(originId));
+
+    const {
+        data: TVDetail,
+        isLoading: TVDetailLoading,
+        refetch: TVDetailRefresh,
+    } = useQuery<IMovieDetails>("detail", () => getTVDetail(originId));
+
+    useEffect(() => {
+        videoRefresh();
+        TVRefresh();
+        movieDetailRefresh();
+        TVDetailRefresh();
+    }, [originId, inputId]);
 
     function onOverlayClicked() {
         history.goBack();
     }
 
     function getVideoId() {
-        if (!videosLoading && isMovie && videos) {
-            for (var i of videos.results) {
-                if (
-                    i.site.toLowerCase() === "youtube" &&
-                    (i.type.toLowerCase() === "clip" ||
-                        i.type.toLowerCase() === "teaser" ||
-                        i.type.toLowerCase() === "trailer")
-                ) {
-                    return i.key;
+        if (isMovie) {
+            if (!videosLoading && videos.results) {
+                for (var i of videos.results) {
+                    if (
+                        i.site.toLowerCase() === "youtube" &&
+                        (i.type.toLowerCase() === "clip" ||
+                            i.type.toLowerCase() === "teaser" ||
+                            i.type.toLowerCase() === "trailer")
+                    ) {
+                        return i.key;
+                    }
                 }
+                return "na";
             }
-            return "na";
-        } else if (!TVVideosLoading && !isMovie && TVVideos) {
-            for (var i of TVVideos.results) {
-                if (
-                    i.site.toLowerCase() === "youtube" &&
-                    (i.type.toLowerCase() === "clip" ||
-                        i.type.toLowerCase() === "teaser" ||
-                        i.type.toLowerCase() === "trailer")
-                ) {
-                    return i.key;
+        } else {
+            if (!TVVideosLoading && TVVideos.results) {
+                for (var i of TVVideos.results) {
+                    if (
+                        i.site.toLowerCase() === "youtube" &&
+                        (i.type.toLowerCase() === "clip" ||
+                            i.type.toLowerCase() === "teaser" ||
+                            i.type.toLowerCase() === "trailer")
+                    ) {
+                        return i.key;
+                    }
                 }
+                return "na";
             }
-            return "na";
         }
     }
 
@@ -116,12 +136,17 @@ function MovieDatail({ bigMovieMatch, clickedMovie, y }: any) {
         }
     }
 
+    console.log(`videoLoading : ${videosLoading}`);
+    console.log(`TVVideosLoading : ${TVVideosLoading}`);
+    console.log(`detailLoading : ${detailLoading}`);
+    console.log(`TVDetailLoading : ${TVDetailLoading}`);
+
     videoKey = getVideoId();
 
     return (
         <>
             {videosLoading ||
-            detailLoading ||
+            TVVideosLoading ||
             detailLoading ||
             TVDetailLoading ? null : (
                 <>
