@@ -57,7 +57,11 @@ function Slide({ data, title, category }: any) {
     }
 
     function onBoxClicked(movieId: number) {
-        history.push(`/movies/${movieId}`);
+        if (category.slice(0, 3) === "tv_") {
+            history.push(`/tv/${movieId}`);
+        } else {
+            history.push(`/movies/${movieId}`);
+        }
     }
 
     return (
@@ -104,7 +108,7 @@ function Slide({ data, title, category }: any) {
                             >
                                 <img src="https://www.svgrepo.com/show/303341/netflix-1-logo.svg"></img>
                                 <Info variants={infoVariants}>
-                                    <h4>{movie.title}</h4>
+                                    <h4>{movie.name}</h4>
                                 </Info>
                             </Box>
                         ))}
