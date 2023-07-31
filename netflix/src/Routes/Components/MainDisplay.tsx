@@ -12,16 +12,23 @@ import { useHistory } from "react-router-dom";
 
 interface IDisplay {
     id: string;
+    category: string;
     title?: string;
     overview?: string;
     bgIamgePath?: string;
 }
 
-function MainDisplay({ id, title, overview, bgIamgePath }: IDisplay) {
+function MainDisplay({ id, category, title, overview, bgIamgePath }: IDisplay) {
     const history = useHistory();
 
+    const isMovie = category.slice(0, 3) === "tv_" ? false : true;
+
     function onMoreInfoButtonClick(id: string) {
-        history.push(`/movies/trd${id}`);
+        if (category.slice(0, 3) === "tv_") {
+            history.push(`/tv/tv_art${id}`);
+        } else {
+            history.push(`/movies/trd${id}`);
+        }
     }
 
     return (
@@ -53,7 +60,7 @@ function MainDisplay({ id, title, overview, bgIamgePath }: IDisplay) {
                         backgroundColor: "rgba(73, 74, 68, 0.6)",
                     }}
                     onClick={() => onMoreInfoButtonClick(id)}
-                    layoutId={`trd${id}`}
+                    layoutId={isMovie ? `trd${id}` : `/tv_art${id}`}
                 >
                     <svg
                         width="30"

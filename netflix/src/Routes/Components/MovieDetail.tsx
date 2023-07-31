@@ -42,6 +42,7 @@ function MovieDatail({ bigMovieMatch, clickedMovie, y }: any) {
         ? bigMovieMatch.params.movieId
         : "tv_" + bigMovieMatch.params.tvId;
 
+    console.log(originId);
     console.log(inputId);
 
     const isMovie = bigMovieMatch.params.movieId ? true : false;
@@ -68,7 +69,7 @@ function MovieDatail({ bigMovieMatch, clickedMovie, y }: any) {
     }
 
     function getVideoId() {
-        if (!videosLoading && isMovie) {
+        if (!videosLoading && isMovie && videos) {
             for (var i of videos.results) {
                 if (
                     i.site.toLowerCase() === "youtube" &&
@@ -80,7 +81,7 @@ function MovieDatail({ bigMovieMatch, clickedMovie, y }: any) {
                 }
             }
             return "na";
-        } else if (!TVVideosLoading && !isMovie) {
+        } else if (!TVVideosLoading && !isMovie && TVVideos) {
             for (var i of TVVideos.results) {
                 if (
                     i.site.toLowerCase() === "youtube" &&

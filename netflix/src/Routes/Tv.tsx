@@ -78,6 +78,7 @@ function Tv() {
                 <>
                     <MainDisplay
                         id={aringTV?.results[0].id + ""}
+                        category="tv_art"
                         title={aringTV?.results[0].title}
                         overview={aringTV?.results[0].overview}
                         bgIamgePath={aringTV?.results[0].backdrop_path}
