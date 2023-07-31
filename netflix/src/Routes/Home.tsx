@@ -16,7 +16,6 @@ import { CategoryRow, Loader, Wrapper } from "./Styles/HomeStyled";
 import MainDisplay from "./Components/MainDisplay";
 import Slide from "./Components/Slide";
 import MovieDatail from "./Components/MovieDetail";
-import { styled } from "styled-components";
 import Footer from "./Components/Footer";
 
 function Home() {
