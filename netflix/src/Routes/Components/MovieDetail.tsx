@@ -14,7 +14,13 @@ import {
 } from "../Styles/MovieDetailStyled";
 import { makeImagePath } from "../../utils";
 import YouTube from "react-youtube";
-import { IGetMoviesResult, getMovieDetail, getMovieVideo } from "../../api";
+import {
+    IGetMoviesResult,
+    getMovieDetail,
+    getMovieVideo,
+    getTVDetail,
+    getTVVideo,
+} from "../../api";
 import { useQuery } from "react-query";
 
 interface IMovieDetails {
@@ -32,8 +38,21 @@ function MovieDatail({ bigMovieMatch, clickedMovie, y }: any) {
         ? bigMovieMatch.params.movieId.slice(3)
         : bigMovieMatch.params.tvId.slice(3);
 
+    const inputId = bigMovieMatch.params.movieId
+        ? bigMovieMatch.params.movieId
+        : "tv_" + bigMovieMatch.params.tvId;
+
+    console.log(inputId);
+
+    const isMovie = bigMovieMatch.params.movieId ? true : false;
+
     const { data: videos, isLoading: videosLoading } = useQuery("videos", () =>
         getMovieVideo(originId)
+    );
+
+    const { data: TVVideos, isLoading: TVVideosLoading } = useQuery(
+        "TVVideos",
+        () => getTVVideo(originId)
     );
 
     const { data: detail, isLoading: detailLoading } = useQuery<IMovieDetails>(
@@ -41,13 +60,28 @@ function MovieDatail({ bigMovieMatch, clickedMovie, y }: any) {
         () => getMovieDetail(originId)
     );
 
+    const { data: TVDetail, isLoading: TVDetailLoading } =
+        useQuery<IMovieDetails>("detail", () => getTVDetail(originId));
+
     function onOverlayClicked() {
         history.goBack();
     }
 
     function getVideoId() {
-        if (!videosLoading) {
+        if (!videosLoading && isMovie) {
             for (var i of videos.results) {
+                if (
+                    i.site.toLowerCase() === "youtube" &&
+                    (i.type.toLowerCase() === "clip" ||
+                        i.type.toLowerCase() === "teaser" ||
+                        i.type.toLowerCase() === "trailer")
+                ) {
+                    return i.key;
+                }
+            }
+            return "na";
+        } else if (!TVVideosLoading && !isMovie) {
+            for (var i of TVVideos.results) {
                 if (
                     i.site.toLowerCase() === "youtube" &&
                     (i.type.toLowerCase() === "clip" ||
@@ -62,35 +96,40 @@ function MovieDatail({ bigMovieMatch, clickedMovie, y }: any) {
     }
 
     function getGenres() {
-        if (!detailLoading && detail?.genres) {
-            let gen = "";
-            for (var i of detail?.genres) {
-                gen += i.name + ", ";
+        if (isMovie) {
+            if (!detailLoading && detail?.genres) {
+                let gen = "";
+                for (var i of detail?.genres) {
+                    gen += i.name + ", ";
+                }
+                return gen.slice(0, gen.length - 2);
             }
-            return gen.slice(0, gen.length - 2);
+        } else {
+            if (!TVDetailLoading && TVDetail?.genres) {
+                let gen = "";
+                for (var i of TVDetail?.genres) {
+                    gen += i.name + ", ";
+                }
+                return gen.slice(0, gen.length - 2);
+            }
         }
     }
 
     videoKey = getVideoId();
 
-    // if (!detailLoading) {
-    //     console.log(detail?.homepage);
-
-    // }
-
     return (
         <>
-            {videosLoading || detailLoading ? null : (
+            {videosLoading ||
+            detailLoading ||
+            detailLoading ||
+            TVDetailLoading ? null : (
                 <>
                     <Overlay
                         onClick={onOverlayClicked}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                     />
-                    <BigMovie
-                        layoutId={bigMovieMatch.params.movieId}
-                        style={{ top: y + 100 }}
-                    >
+                    <BigMovie layoutId={inputId} style={{ top: y + 100 }}>
                         {clickedMovie && (
                             <>
                                 {videoKey === "na" ? (
@@ -120,13 +159,17 @@ function MovieDatail({ bigMovieMatch, clickedMovie, y }: any) {
                                     ></YouTube>
                                 )}
                                 <BigTitle>
-                                    {clickedMovie.title}
+                                    {clickedMovie.title
+                                        ? clickedMovie.title
+                                        : clickedMovie.name}
                                     <Vote>
                                         {detail?.vote_average
                                             ? (
                                                   detail?.vote_average * 10
                                               ).toFixed()
-                                            : detail?.vote_average}
+                                            : detail?.vote_average
+                                            ? detail?.vote_average
+                                            : 0}
                                         % Match
                                     </Vote>
                                 </BigTitle>
