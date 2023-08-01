@@ -22,7 +22,7 @@ import {
     getTVVideo,
 } from "../../api";
 import { useQuery } from "react-query";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface IMovieDetails {
     genres: [{ id: number; name: string }];
@@ -44,10 +44,6 @@ function MovieDatail({ bigMovieMatch, clickedMovie, y }: any) {
         : "tv_" + bigMovieMatch.params.tvId;
 
     const isMovie = bigMovieMatch.params.movieId ? true : false;
-
-    console.log(originId);
-    console.log(inputId);
-    console.log(`is movie is : ${isMovie}`);
 
     const {
         data: videos,
@@ -72,13 +68,6 @@ function MovieDatail({ bigMovieMatch, clickedMovie, y }: any) {
         isLoading: TVDetailLoading,
         refetch: TVDetailRefresh,
     } = useQuery<IMovieDetails>("detail", () => getTVDetail(originId));
-
-    useEffect(() => {
-        videoRefresh();
-        TVRefresh();
-        movieDetailRefresh();
-        TVDetailRefresh();
-    }, [originId, inputId]);
 
     function onOverlayClicked() {
         history.goBack();
@@ -136,11 +125,6 @@ function MovieDatail({ bigMovieMatch, clickedMovie, y }: any) {
         }
     }
 
-    console.log(`videoLoading : ${videosLoading}`);
-    console.log(`TVVideosLoading : ${TVVideosLoading}`);
-    console.log(`detailLoading : ${detailLoading}`);
-    console.log(`TVDetailLoading : ${TVDetailLoading}`);
-
     videoKey = getVideoId();
 
     return (
@@ -181,6 +165,12 @@ function MovieDatail({ bigMovieMatch, clickedMovie, y }: any) {
                                         }}
                                         onEnd={(e) => {
                                             e.target.stopVideo(0);
+                                        }}
+                                        // onPlay={(e) => {
+                                        //     e.target.playVideo();
+                                        // }}
+                                        onReady={(e) => {
+                                            e.target.playVideo(true);
                                         }}
                                     ></YouTube>
                                 )}
