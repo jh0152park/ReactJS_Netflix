@@ -199,3 +199,35 @@ export function getTVVideo(id: string) {
         (response) => response.json()
     );
 }
+
+export function getMovieSearch(page: string, keyword: string) {
+    const options = {
+        method: "GET",
+        headers: {
+            accept: "application/json",
+            Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3MzlhNzA4ODRhMTY2ZDQ2ODE0ZTYwNTMwMTU2OGQyZCIsInN1YiI6IjY0YmEyMDIwMzAwOWFhMDBlMjY0Y2VhZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.eHILwGMMFNYioeUQaVUSgf_kU4PRKZP99iDQOHXQRpI",
+        },
+    };
+
+    fetch(
+        `https://api.themoviedb.org/3/search/movie?query=${keyword}&page=${page}`,
+        options
+    ).then((response) => response.json());
+}
+
+export function getTVSearch(page: string, keyword: string) {
+    const options = {
+        method: "GET",
+        headers: {
+            accept: "application/json",
+            Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3MzlhNzA4ODRhMTY2ZDQ2ODE0ZTYwNTMwMTU2OGQyZCIsInN1YiI6IjY0YmEyMDIwMzAwOWFhMDBlMjY0Y2VhZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.eHILwGMMFNYioeUQaVUSgf_kU4PRKZP99iDQOHXQRpI",
+        },
+    };
+
+    fetch(
+        `https://api.themoviedb.org/3/search/tv?query=${keyword}&page=${page}`,
+        options
+    ).then((response) => response.json());
+}
