@@ -9,8 +9,12 @@ import { useEffect } from "react";
 function Search() {
     const location = useLocation();
     const keyword = new URLSearchParams(location.search).get("keyword");
+    const currentPath = location.pathname + location.search;
 
     console.log(keyword);
+    console.log(location.search);
+    console.log(location.pathname);
+    console.log(currentPath);
 
     const queryReuslts = useQueries(
         [1, 2, 3, 4].map((page) => ({
@@ -30,7 +34,8 @@ function Search() {
 
     const isExist =
         !loading && queryReuslts[0].data?.results.length === 0 ? false : true;
-    console.log(`is exist : ${isExist}`);
+
+    console.log(queryReuslts[0].data);
 
     return (
         <>
@@ -58,7 +63,7 @@ function Search() {
                                 <Slide
                                     data={queryReuslts[0].data}
                                     title={`"${keyword}" Search Results`}
-                                    category="trd"
+                                    category="src1"
                                 ></Slide>
                             </CategoryRow>
 
@@ -70,7 +75,7 @@ function Search() {
                                 <Slide
                                     data={queryReuslts[1].data}
                                     title=""
-                                    category="trd"
+                                    category="src2"
                                 ></Slide>
                             </CategoryRow>
 
@@ -82,7 +87,7 @@ function Search() {
                                 <Slide
                                     data={queryReuslts[2].data}
                                     title=""
-                                    category="trd"
+                                    category="src3"
                                 ></Slide>
                             </CategoryRow>
 
@@ -94,7 +99,7 @@ function Search() {
                                 <Slide
                                     data={queryReuslts[3].data}
                                     title=""
-                                    category="trd"
+                                    category="src4"
                                 ></Slide>
                             </CategoryRow>
 

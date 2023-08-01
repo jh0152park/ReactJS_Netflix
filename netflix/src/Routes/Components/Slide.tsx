@@ -18,11 +18,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { makeImagePath } from "../../utils";
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 const offset = 6;
 
 function Slide({ data, title, category }: any) {
+    const location = useLocation();
     const history = useHistory();
     const [index, setIndex] = useState(0);
     const [leaving, setLeaving] = useState(false);
@@ -59,6 +60,9 @@ function Slide({ data, title, category }: any) {
     function onBoxClicked(movieId: number) {
         if (category.slice(0, 3) === "tv_") {
             history.push(`/tv/${movieId}`);
+        } else if (category.slice(0, 3) === "src") {
+            const currentPath = location.pathname + location.search;
+            // history.push(`${currentPath}/${movieId}`);
         } else {
             history.push(`/movies/${movieId}`);
         }
