@@ -200,7 +200,7 @@ export function getTVVideo(id: string) {
     );
 }
 
-export function getMovieSearch(page: string, keyword: string) {
+export function getMovieSearch(page: number, keyword: string) {
     const options = {
         method: "GET",
         headers: {
@@ -210,13 +210,13 @@ export function getMovieSearch(page: string, keyword: string) {
         },
     };
 
-    fetch(
+    return fetch(
         `https://api.themoviedb.org/3/search/movie?query=${keyword}&page=${page}`,
         options
     ).then((response) => response.json());
 }
 
-export function getTVSearch(page: string, keyword: string) {
+export function getTVSearch(page: number, keyword: string) {
     const options = {
         method: "GET",
         headers: {
@@ -226,7 +226,7 @@ export function getTVSearch(page: string, keyword: string) {
         },
     };
 
-    fetch(
+    return fetch(
         `https://api.themoviedb.org/3/search/tv?query=${keyword}&page=${page}`,
         options
     ).then((response) => response.json());
