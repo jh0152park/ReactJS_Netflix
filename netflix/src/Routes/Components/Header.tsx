@@ -145,7 +145,7 @@ function Header() {
     const navAnimation = useAnimation();
 
     const history = useHistory();
-    const { register, handleSubmit } = useForm<IForm>();
+    const { register, handleSubmit, setValue } = useForm<IForm>();
 
     function toggleSearch() {
         // if (searchOpen) {
@@ -162,6 +162,7 @@ function Header() {
 
     function onValid(data: IForm) {
         console.log(data);
+        setValue("keyword", "");
         history.push(`/search?keyword=${data.keyword}`);
     }
 
