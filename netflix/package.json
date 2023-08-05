@@ -63,5 +63,5 @@
         "@types/react-router-dom": "^5.3.3",
         "@types/styled-components": "^5.1.26"
     },
-    "homepage": "https://github.com/jh0152park/ReactJS_Netflix"
+    "homepage": "https://jh0152park.github.io/ReactJS_Netflix"
 }

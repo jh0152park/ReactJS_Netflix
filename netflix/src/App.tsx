@@ -8,7 +8,7 @@ import Header from "./Routes/Components/Header";
 
 function App() {
     return (
-        <Router>
+        <Router basename={process.env.PUBLIC_URL}>
             <Header></Header>
             <Switch>
                 <Route path="/tv">
